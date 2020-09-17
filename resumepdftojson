@@ -120,7 +120,7 @@ def headers_para(doc, size_tag):
 
                                 previous_s = s
 
-                    # new block started, indicating with a pipe
+                    
                     block_string += ""
 
                 header_para.append(block_string)
@@ -166,14 +166,14 @@ def main():
     k=len(uelements)
     selements=listToString(uelements)
     email = re.findall('\S+@\S+', selements)
-    h1 = re.findall("<h1>(.*?)<", selements)
-    h =['Address']+re.findall("<h2>(.*?)<", selements)
-    p = re.findall("<p>(.*?)<h", selements) + [uelements[k - 1]]
-    for i in range(len(p)):
+    h1 = re.findall("<h1>(.*?)<", selements) #to get the name
+    h =['Address']+re.findall("<h2>(.*?)<", selements) #to get the headings
+    p = re.findall("<p>(.*?)<h", selements) + [uelements[k - 1]] # to get the paragraphs
+    for i in range(len(p)): #to remove the unwanted tags and strings
         p[i] = re.sub('\S+@\S+', "", p[i])
         p[i] = re.sub("<p>", "", p[i])
         p[i] = re.sub("\u200b", "", p[i])
-    dictab={'name':h1[0],'email':email[0]}
+    dictab={'name':h1[0],'email':email[0]} # adding name and mail fields to dictionary
     for key in h:
         for value in p:
             dictab[key] = value
